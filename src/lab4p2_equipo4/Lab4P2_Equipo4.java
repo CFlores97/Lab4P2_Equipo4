@@ -130,4 +130,49 @@ public class Lab4P2_Equipo4 {
         }
 
     }
+    
+    //Listar para ArrayList
+    public static int Listar(ArrayList lista){
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println((i + 1) + ".) " + lista.get(i));
+        }
+        System.out.println("\nElija uno de la lista");
+        int indice = sc.nextInt();
+        while(indice <= 0 || indice > lista.size()){
+            System.out.println("Tiene que elegir un indice valido!");
+            indice = sc.nextInt();
+        }
+        
+        return indice - 1;
+    }
+    
+    //Listar los pokemones.
+    public static int ListarPokemon(Pokemon[] lista){
+        for (int i = 0; i < lista.length; i++) {
+            System.out.println((i + 1) + ".) " + lista[i]);
+        }
+        System.out.println("\nElija un Pokemon de la lista");
+        int indice = sc.nextInt();
+        while(indice <= 0 || indice > lista.length){
+            System.out.println("Tiene que elegir un indice valido!");
+            indice = sc.nextInt();
+        }
+        
+        return indice - 1;
+    }
+    
+    //Listar los movimientos.
+    public static int ListarMovimientos(Movimiento[] lista){
+        for (int i = 0; i < lista.length; i++) {
+            System.out.println((i + 1) + ".) " + lista[i]);
+        }
+        System.out.println("\nElija un movimiento de la lista");
+        int indice = sc.nextInt();
+        while(indice <= 0 || indice > lista.length){
+            System.out.println("Tiene que elegir un indice valido!");
+            indice = sc.nextInt();
+        }
+        
+        return indice - 1;
+    }
 }
