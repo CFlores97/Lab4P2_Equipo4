@@ -2,6 +2,7 @@ package lab4p2_equipo4;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Lab4P2_Equipo4 {
 
@@ -9,6 +10,7 @@ public class Lab4P2_Equipo4 {
     static ArrayList<Entrenador> entrenadores = new ArrayList<>();
 
     static Scanner sc = new Scanner(System.in);
+    
 
     public static void main(String[] args) {
         boolean running = true;
@@ -19,14 +21,47 @@ public class Lab4P2_Equipo4 {
 
             switch (op) {
                 case 1:
+                    addEntrenador();
                     break;
                 case 2:
+                    //Battle factory
                     break;
 
                 case 3:
+                    
+                    // temporal
+                    int indice = Listar(entrenadores);
+                    
+                    
+                    System.out.println("Que accion desea realizar?\n1. Capturar\n2. Entrenar");
+                    int acc = sc.nextInt();
+                    
+                    switch (acc) {
+                        case 1:
+                            capturaPok(entrenadores.get(indice));
+                            break;
+                        case 2:
+                            
+                            int index = ListarPokemon(entrenadores.get(indice).getPokemones());
+                            Pokemon tempPok = entrenadores.get(indice).getPokemones()[index];
+                            while (entrenadores.get(indice).getPokemones()[index] == null){
+                                System.out.println("Tiene que elegir un pokemon");
+                                index = ListarPokemon(entrenadores.get(indice).getPokemones());
+                            }
+                            
+                            int newExp = Entrenar();
+                            tempPok.setExperiencia(tempPok.getExperiencia() + newExp);
+                            while(tempPok.getExperiencia() >= tempPok.getSubir_nivel()){
+                                
+                            }
+                            break;
+                        default:
+                            
+                    }
                     break;
 
                 case 4:
+                    // anyadir movimiento
                     break;
 
                 case 5:
@@ -174,5 +209,16 @@ public class Lab4P2_Equipo4 {
         }
         
         return indice - 1;
+    }
+    
+    public static int Entrenar(){
+        
+        Random ran = new Random();
+        
+        int multExp = ran.nextInt(2);
+        int expGanada = ran.nextInt(4999) + 100;
+        
+        return multExp*expGanada;
+        
     }
 }
