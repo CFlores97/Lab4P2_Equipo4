@@ -82,7 +82,7 @@ public class Lab4P2_Equipo4 {
                     break;
 
                 case 4:
-                    // anyadir movimiento
+                    añadirMovimiento();
                     break;
 
                 case 5:
@@ -196,5 +196,80 @@ public class Lab4P2_Equipo4 {
 
         return multExp * expGanada;
 
+    }
+    
+    public static void añadirMovimiento(){
+        System.out.println("Ingrese el nombre del ataque:");
+        String nombre = sc.nextLine();
+        System.out.println("Ingrese la descripcion del ataque:");
+        String descripcion = sc.nextLine();
+        System.out.println("""
+                           Que tipo de ataque es?:
+                           1.)Fisico
+                           2.)Especial
+                           3.)Estado
+                           """);
+        int opcion = sc.nextInt();
+        switch(opcion){
+            case 1:
+                System.out.println("Ingrese el poder de ataque:");
+                int poder = sc.nextInt();
+                System.out.println("Ingrese la precision de ataque");
+                int precision = sc.nextInt();
+                
+                Movimiento move = new Fisico(poder, precision, nombre, descripcion);
+                movimientos.add(move);
+                break;
+                
+            case 2:
+                System.out.println("Ingrese el poder de ataque:");
+                int poderE = sc.nextInt();
+                System.out.println("Ingrese la precision de ataque");
+                int precisionE = sc.nextInt();
+                
+                Movimiento move2 = new Especial(poderE, precisionE, nombre, descripcion);
+                movimientos.add(move2);
+                break;
+                
+            case 3:
+                System.out.println("""
+                                   Elija que tipo de estado es:
+                                   1.)Dormido
+                                   2.)Envenenado
+                                   3.)Paralizado
+                                   4.)Quemado
+                                   """);
+                int option = sc.nextInt();
+                String estado = "";
+                switch(option){
+                    case 1:
+                        estado = "Dormido";
+                        break;
+                        
+                    case 2:
+                        estado = "Envenenado";
+                        break;
+                        
+                    case 3:
+                        estado = "Paralizado";
+                        break;
+                        
+                    case 4:
+                        estado = "Quemado";
+                        break;
+                        
+                    default:
+                        break;
+                        
+                }
+                Movimiento move3 = new Estado(estado, nombre, descripcion);
+                movimientos.add(move3);
+                break;
+                
+            default:
+                break;
+                
+        }
+        
     }
 }
