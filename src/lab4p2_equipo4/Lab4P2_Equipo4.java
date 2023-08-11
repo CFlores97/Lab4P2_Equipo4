@@ -114,7 +114,16 @@ public class Lab4P2_Equipo4 {
         
         switch (ans) {
             case 1:
-                
+                for (int i = 0; i < a.getPokemones().length; i++) {
+                    if(a.getPokemones()[i] == null){
+                         a.getPokemones()[i] = pokemon;
+                         break;
+                    }
+                   
+                }
+                break;
+            case 2:
+                a.getPc().add(pokemon);
                 break;
             default:
                 throw new AssertionError();
