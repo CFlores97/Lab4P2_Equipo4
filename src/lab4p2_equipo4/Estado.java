@@ -30,7 +30,10 @@ public class Estado extends Movimiento{
         Random rand = new Random();
         int rng = rand.nextInt(100) + 1;
         if(rng < 76){
-            
+            defensor.setEstado(estado);
+        }
+        else{
+            System.out.println("El ataque fallo");
         }
     }
 }
