@@ -56,7 +56,7 @@ public class Lab4P2_Equipo4 {
     }
 
     // agrega pokemones
-    public static void capturaPok() {
+    public static void capturaPok(Entrenador a) {
         System.out.println("Ingrese la especie del pokemon: ");
         String esp = sc.next();
 
@@ -68,6 +68,57 @@ public class Lab4P2_Equipo4 {
 
         System.out.println("Ingrese la experiencia que le falta para subir al siguiente nivel: ");
         int subir_exp = sc.nextInt();
+
+        // agregar movimientos
+        
+        System.out.println("Ingrese el HP del pokemon: ");
+        int hp = sc.nextInt();
+        System.out.println("Ingrese el ataque del pokemon: ");
+        int atk = sc.nextInt();
+        System.out.println("Ingrese la defensa del pokemon: ");
+        int def = sc.nextInt();
+        System.out.println("Ingrese el especial del pokemon: ");
+        int sp = sc.nextInt();
+        System.out.println("Ingrese la velocidad  del pokemon: ");
+        int spe = sc.nextInt();
+
+        System.out.println("Ingrese el estado del pokemon\n1. Dormido\n2. Envenenado\n3. Paralizado\n4. Quemado\n5. Neutral ");
+        int opcion = sc.nextInt();
+
+        String estado = "";
+
+        switch (opcion) {
+            case 1:
+                estado = "Dormido";
+                break;
+            case 2:
+                estado = "Envenenado";
+                break;
+            case 3:
+                estado = "Paralizado";
+                break;
+            case 4:
+                estado = "Quemado";
+                break;
+            case 5:
+                estado = "Neutral";
+                break;
+            default:
+
+        }
+
+        Pokemon pokemon = new Pokemon(esp, estado, nivel, exp, subir_exp, hp, atk, def, sp, spe);
+        
+        System.out.println("A donde quiere agregar su pokemon?\n1. Equipo principal\n2. Caja de pokemones");
+        int ans = sc.nextInt();
+        
+        switch (ans) {
+            case 1:
+                
+                break;
+            default:
+                throw new AssertionError();
+        }
 
     }
 }
