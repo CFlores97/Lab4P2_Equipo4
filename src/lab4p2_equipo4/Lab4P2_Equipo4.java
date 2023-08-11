@@ -10,7 +10,6 @@ public class Lab4P2_Equipo4 {
     static ArrayList<Entrenador> entrenadores = new ArrayList<>();
 
     static Scanner sc = new Scanner(System.in);
-    
 
     public static void main(String[] args) {
         boolean running = true;
@@ -28,35 +27,57 @@ public class Lab4P2_Equipo4 {
                     break;
 
                 case 3:
-                    
+
                     // temporal
                     int indice = Listar(entrenadores);
-                    
-                    
+
                     System.out.println("Que accion desea realizar?\n1. Capturar\n2. Entrenar");
                     int acc = sc.nextInt();
-                    
+
                     switch (acc) {
                         case 1:
-                            capturaPok(entrenadores.get(indice));
+                            Pokemon pk = capturaPok();
+                            Entrenador a = entrenadores.get(indice);
+                            System.out.println("A donde quiere agregar su pokemon?\n1. Equipo principal\n2. Caja de pokemones");
+                            int ans = sc.nextInt();
+                            switch (ans) {
+                                case 1:
+                                    int posicion = ListarPokemon(a.getPokemones());
+                                    a.getPokemones()[posicion] = pk;
+                                    break;
+                                    
+                                case 2:
+                                    a.getPc().add(pk);
+                                    break;
+                                    
+                                default:
+                                    throw new AssertionError();
+                            }
                             break;
                         case 2:
-                            
+
                             int index = ListarPokemon(entrenadores.get(indice).getPokemones());
                             Pokemon tempPok = entrenadores.get(indice).getPokemones()[index];
-                            while (entrenadores.get(indice).getPokemones()[index] == null){
+                            while (entrenadores.get(indice).getPokemones()[index] == null) {
                                 System.out.println("Tiene que elegir un pokemon");
                                 index = ListarPokemon(entrenadores.get(indice).getPokemones());
+                                tempPok = entrenadores.get(indice).getPokemones()[index];
                             }
-                            
+
                             int newExp = Entrenar();
-                            tempPok.setExperiencia(tempPok.getExperiencia() + newExp);
-                            while(tempPok.getExperiencia() >= tempPok.getSubir_nivel()){
-                                
+                            System.out.println(tempPok.getEspecie() + " gano " + newExp + " exp.");
+
+                            tempPok.setExperiencia_actual(tempPok.getExperiencia_actual() + newExp);
+                            tempPok.setExp_acumulada(tempPok.getExp_acumulada() + newExp);
+
+                            while (tempPok.getExperiencia_actual() >= tempPok.getSubir_nivel()) {
+                                tempPok.setExperiencia_actual(tempPok.getExperiencia_actual() - tempPok.getSubir_nivel());
+                                tempPok.setNivel(tempPok.getNivel() + 1);
                             }
+                            System.out.println(tempPok.getEspecie() + " subio a nivel " + tempPok.getNivel());
                             break;
                         default:
-                            
+
                     }
                     break;
 
@@ -91,21 +112,20 @@ public class Lab4P2_Equipo4 {
     }
 
     // agrega pokemones
-    public static void capturaPok(Entrenador a) {
+    public static Pokemon capturaPok() {
         System.out.println("Ingrese la especie del pokemon: ");
         String esp = sc.next();
 
         System.out.println("Ingrese el nivel del pokemon: ");
         int nivel = sc.nextInt();
 
-        System.out.println("Ingrese la experiencia del pokemon: ");
+        System.out.println("Ingrese la experiencia total del pokemon: ");
         int exp = sc.nextInt();
 
-        System.out.println("Ingrese la experiencia que le falta para subir al siguiente nivel: ");
+        System.out.println("Ingrese la experiencia para subir al siguiente nivel: ");
         int subir_exp = sc.nextInt();
 
         // agregar movimientos
-        
         System.out.println("Ingrese el HP del pokemon: ");
         int hp = sc.nextInt();
         System.out.println("Ingrese el ataque del pokemon: ");
@@ -116,109 +136,65 @@ public class Lab4P2_Equipo4 {
         int sp = sc.nextInt();
         System.out.println("Ingrese la velocidad  del pokemon: ");
         int spe = sc.nextInt();
-
-        System.out.println("Ingrese el estado del pokemon\n1. Dormido\n2. Envenenado\n3. Paralizado\n4. Quemado\n5. Neutral ");
-        int opcion = sc.nextInt();
-
-        String estado = "";
-
-        switch (opcion) {
-            case 1:
-                estado = "Dormido";
-                break;
-            case 2:
-                estado = "Envenenado";
-                break;
-            case 3:
-                estado = "Paralizado";
-                break;
-            case 4:
-                estado = "Quemado";
-                break;
-            case 5:
-                estado = "Neutral";
-                break;
-            default:
-
-        }
+        String estado = "Neutral";
 
         Pokemon pokemon = new Pokemon(esp, estado, nivel, exp, subir_exp, hp, atk, def, sp, spe);
-        
-        System.out.println("A donde quiere agregar su pokemon?\n1. Equipo principal\n2. Caja de pokemones");
-        int ans = sc.nextInt();
-        
-        switch (ans) {
-            case 1:
-                for (int i = 0; i < a.getPokemones().length; i++) {
-                    if(a.getPokemones()[i] == null){
-                         a.getPokemones()[i] = pokemon;
-                         break;
-                    }
-                   
-                }
-                break;
-            case 2:
-                a.getPc().add(pokemon);
-                break;
-            default:
-                throw new AssertionError();
-        }
-
+        return pokemon;
     }
-    
+
     //Listar para ArrayList
-    public static int Listar(ArrayList lista){
+    public static int Listar(ArrayList lista) {
         for (int i = 0; i < lista.size(); i++) {
             System.out.println((i + 1) + ".) " + lista.get(i));
         }
         System.out.println("\nElija uno de la lista");
         int indice = sc.nextInt();
-        while(indice <= 0 || indice > lista.size()){
+        while (indice <= 0 || indice > lista.size()) {
             System.out.println("Tiene que elegir un indice valido!");
             indice = sc.nextInt();
         }
-        
+
         return indice - 1;
     }
-    
+
     //Listar los pokemones.
-    public static int ListarPokemon(Pokemon[] lista){
+    public static int ListarPokemon(Pokemon[] lista) {
         for (int i = 0; i < lista.length; i++) {
             System.out.println((i + 1) + ".) " + lista[i]);
         }
         System.out.println("\nElija un Pokemon de la lista");
         int indice = sc.nextInt();
-        while(indice <= 0 || indice > lista.length){
+        while (indice <= 0 || indice > lista.length) {
             System.out.println("Tiene que elegir un indice valido!");
             indice = sc.nextInt();
         }
-        
+
         return indice - 1;
     }
-    
+
     //Listar los movimientos.
-    public static int ListarMovimientos(Movimiento[] lista){
+    public static int ListarMovimientos(Movimiento[] lista) {
         for (int i = 0; i < lista.length; i++) {
             System.out.println((i + 1) + ".) " + lista[i]);
         }
         System.out.println("\nElija un movimiento de la lista");
         int indice = sc.nextInt();
-        while(indice <= 0 || indice > lista.length){
+        while (indice <= 0 || indice > lista.length) {
             System.out.println("Tiene que elegir un indice valido!");
             indice = sc.nextInt();
         }
-        
+
         return indice - 1;
     }
-    
-    public static int Entrenar(){
-        
+
+    public static int Entrenar() {
+
         Random ran = new Random();
-        
+
         int multExp = ran.nextInt(2);
         int expGanada = ran.nextInt(4999) + 100;
-        
-        return multExp*expGanada;
-        
+
+        return multExp * expGanada;
+
     }
 }

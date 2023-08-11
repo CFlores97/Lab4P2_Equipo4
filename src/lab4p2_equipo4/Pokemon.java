@@ -4,11 +4,20 @@ package lab4p2_equipo4;
 
 public class Pokemon {
     private String especie, estado;
-    private int nivel, experiencia, subir_nivel, HP, atk, def, sp, speed; 
+    private int nivel, experiencia_actual, subir_nivel, HP, atk, def, sp, speed; 
     
     
     // array normal de movimientos
     private Movimiento[] movimientos = new Movimiento[4];
+    private int exp_acumulada;
+    
+    public int getExp_acumulada() {
+        return exp_acumulada;
+    }
+
+    public void setExp_acumulada(int exp_acumulada) {
+        this.exp_acumulada = exp_acumulada;
+    }
 
     public Pokemon() {
     }
@@ -17,7 +26,8 @@ public class Pokemon {
         this.especie = especie;
         this.estado = estado;
         this.nivel = nivel;
-        this.experiencia = experiencia;
+        this.experiencia_actual = 0;
+        this.exp_acumulada = experiencia;
         this.subir_nivel = subir_nivel;
         this.HP = HP;
         this.atk = atk;
@@ -50,12 +60,12 @@ public class Pokemon {
         this.nivel = nivel;
     }
 
-    public int getExperiencia() {
-        return experiencia;
+    public int getExperiencia_actual() {
+        return experiencia_actual;
     }
 
-    public void setExperiencia(int experiencia) {
-        this.experiencia = experiencia;
+    public void setExperiencia_actual(int experiencia_actual) {
+        this.experiencia_actual = experiencia_actual;
     }
 
     public int getSubir_nivel() {
@@ -116,7 +126,7 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return "Pokemon{" + "especie=" + especie + ", estado=" + estado + ", nivel=" + nivel + ", experiencia=" + experiencia + ", subir_nivel=" + subir_nivel + ", HP=" + HP + ", atk=" + atk + ", def=" + def + ", sp=" + sp + ", speed=" + speed + ", movimientos=" + movimientos + '}';
+        return "Pokemon{" + "especie=" + especie + ", estado=" + estado + ", nivel=" + nivel + ", experiencia total=" + exp_acumulada + ", experiencia=" + experiencia_actual + ", subir_nivel=" + subir_nivel + ", HP=" + HP + ", atk=" + atk + ", def=" + def + ", sp=" + sp + ", speed=" + speed + ", movimientos=" + movimientos + '}';
     }
     
     
