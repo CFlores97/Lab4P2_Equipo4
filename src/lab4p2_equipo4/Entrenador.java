@@ -1,15 +1,13 @@
-
 package lab4p2_equipo4;
 
 import java.util.ArrayList;
 
-
 public class Entrenador {
-    private String nombre; 
+
+    private String nombre;
     private int edad, dinero;
-    
-    
-    private Pokemon [] pokemones = new Pokemon[6];
+
+    private Pokemon[] pokemones = new Pokemon[6];
     private ArrayList<Pokemon> pc = new ArrayList<>();
 
     public Entrenador() {
@@ -19,6 +17,7 @@ public class Entrenador {
         this.nombre = nombre;
         this.edad = edad;
         this.dinero = dinero;
+
     }
 
     public String getNombre() {
@@ -63,9 +62,19 @@ public class Entrenador {
 
     @Override
     public String toString() {
-        return "Entrenador{" + "nombre=" + nombre + ", edad=" + edad + ", dinero=" + dinero + ", pokemones=" + pokemones + ", pc=" + pc + '}';
+        return "Entrenador{" + "nombre=" + nombre + ", edad=" + edad + ", dinero=" + dinero + ", pokemones=" + print(pokemones) + ", pc=" + pc + '}';
+    }
+
+    public static String print(Pokemon[] arreglo) {
+        String acum = "";
+        for (Pokemon pk : arreglo) {
+
+            acum += pk + " ";
+        }
+
+        return acum;
     }
     
     
-    
+
 }

@@ -126,9 +126,19 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return "Pokemon{" + "especie=" + especie + ", estado=" + estado + ", nivel=" + nivel + ", experiencia total=" + exp_acumulada + ", experiencia=" + experiencia_actual + ", subir_nivel=" + subir_nivel + ", HP=" + HP + ", atk=" + atk + ", def=" + def + ", sp=" + sp + ", speed=" + speed + ", movimientos=" + movimientos + '}';
+        return "Pokemon{" + "especie=" + especie + ", estado=" + estado + ", nivel=" + nivel + ", experiencia total=" + exp_acumulada + ", experiencia=" + experiencia_actual + ", subir_nivel=" + subir_nivel + ", HP=" + HP + ", atk=" + atk + ", def=" + def + ", sp=" + sp + ", speed=" + speed + ", movimientos=" + print(movimientos) + '}';
     }
     
+    public static String print(Movimiento[] arreglo) {
+        String acum = "";
+        for (Movimiento mov : arreglo) {
+            
+
+            acum += mov + " ";
+        }
+
+        return acum;
+    }
     
     
 }
