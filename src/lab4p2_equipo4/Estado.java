@@ -26,14 +26,9 @@ public class Estado extends Movimiento{
     }
 
     @Override
-    public void Ataque(Pokemon atacante, Pokemon defensor) {
+    public int Ataque(Pokemon atacante, Pokemon defensor) {
         Random rand = new Random();
         int rng = rand.nextInt(100) + 1;
-        if(rng < 76){
-            defensor.setEstado(estado);
-        }
-        else{
-            System.out.println("El ataque fallo");
-        }
+        return rng;
     }
 }

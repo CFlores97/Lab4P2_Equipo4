@@ -37,7 +37,7 @@ public class Fisico extends Movimiento{
     }
 
     @Override
-    public void Ataque(Pokemon atacante, Pokemon defensor) {
+    public int Ataque(Pokemon atacante, Pokemon defensor) {
         Random rand = new Random();
         int daño = rand.nextInt(50) + 1;
         
@@ -48,8 +48,6 @@ public class Fisico extends Movimiento{
             daño *= 0.5;
         }
         
-        defensor.setHP(defensor.getHP() - daño);
+        return daño;
     }
-    
-    
 }

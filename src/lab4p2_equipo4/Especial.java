@@ -37,7 +37,7 @@ public class Especial extends Movimiento{
     }
 
     @Override
-    public void Ataque(Pokemon atacante, Pokemon defensor) {
+    public int Ataque(Pokemon atacante, Pokemon defensor) {
         Random rand = new Random();
         int daño = rand.nextInt(50) + 1;
         int rng = rand.nextInt(500) + 100;
@@ -46,8 +46,7 @@ public class Especial extends Movimiento{
         if(rng == suma){
             daño *= 2;
         }
-        
-        defensor.setHP(defensor.getHP() - daño);
+        return daño;
     }
     
 }
