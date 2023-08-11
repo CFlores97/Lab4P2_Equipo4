@@ -45,11 +45,11 @@ public class Lab4P2_Equipo4 {
                                     int posicion = ListarPokemon(a.getPokemones());
                                     a.getPokemones()[posicion] = pk;
                                     break;
-                                    
+
                                 case 2:
                                     a.getPc().add(pk);
                                     break;
-                                    
+
                                 default:
                                     throw new AssertionError();
                             }
@@ -125,7 +125,6 @@ public class Lab4P2_Equipo4 {
         System.out.println("Ingrese la experiencia para subir al siguiente nivel: ");
         int subir_exp = sc.nextInt();
 
-        // agregar movimientos
         System.out.println("Ingrese el HP del pokemon: ");
         int hp = sc.nextInt();
         System.out.println("Ingrese el ataque del pokemon: ");
@@ -139,6 +138,14 @@ public class Lab4P2_Equipo4 {
         String estado = "Neutral";
 
         Pokemon pokemon = new Pokemon(esp, estado, nivel, exp, subir_exp, hp, atk, def, sp, spe);
+
+        // agregar movimientos
+        for (int i = 0; i < 4; i++) {
+            int indx = Listar(movimientos);
+            pokemon.getMovimientos()[i] = movimientos.get(indx);
+            movimientos.remove(i);
+        }
+
         return pokemon;
     }
 
@@ -197,12 +204,12 @@ public class Lab4P2_Equipo4 {
         return multExp * expGanada;
 
     }
-    
-    public static void añadirMovimiento(){
+
+    public static void añadirMovimiento() {
         System.out.println("Ingrese el nombre del ataque:");
-        String nombre = sc.nextLine();
+        String nombre = sc.next();
         System.out.println("Ingrese la descripcion del ataque:");
-        String descripcion = sc.nextLine();
+        String descripcion = sc.next();
         System.out.println("""
                            Que tipo de ataque es?:
                            1.)Fisico
@@ -210,27 +217,27 @@ public class Lab4P2_Equipo4 {
                            3.)Estado
                            """);
         int opcion = sc.nextInt();
-        switch(opcion){
+        switch (opcion) {
             case 1:
                 System.out.println("Ingrese el poder de ataque:");
                 int poder = sc.nextInt();
                 System.out.println("Ingrese la precision de ataque");
                 int precision = sc.nextInt();
-                
+
                 Movimiento move = new Fisico(poder, precision, nombre, descripcion);
                 movimientos.add(move);
                 break;
-                
+
             case 2:
                 System.out.println("Ingrese el poder de ataque:");
                 int poderE = sc.nextInt();
                 System.out.println("Ingrese la precision de ataque");
                 int precisionE = sc.nextInt();
-                
+
                 Movimiento move2 = new Especial(poderE, precisionE, nombre, descripcion);
                 movimientos.add(move2);
                 break;
-                
+
             case 3:
                 System.out.println("""
                                    Elija que tipo de estado es:
@@ -241,35 +248,36 @@ public class Lab4P2_Equipo4 {
                                    """);
                 int option = sc.nextInt();
                 String estado = "";
-                switch(option){
+                switch (option) {
                     case 1:
                         estado = "Dormido";
                         break;
-                        
+
                     case 2:
                         estado = "Envenenado";
                         break;
-                        
+
                     case 3:
                         estado = "Paralizado";
                         break;
-                        
+
                     case 4:
                         estado = "Quemado";
                         break;
-                        
+
                     default:
                         break;
-                        
+
                 }
                 Movimiento move3 = new Estado(estado, nombre, descripcion);
                 movimientos.add(move3);
+
                 break;
-                
+
             default:
                 break;
-                
+
         }
-        
+
     }
 }
