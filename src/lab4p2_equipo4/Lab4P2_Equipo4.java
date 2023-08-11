@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Lab4P2_Equipo4 {
 
     static ArrayList<Movimiento> movimientos = new ArrayList<>();
+    
     static Scanner sc = new Scanner(System.in);
     
     
