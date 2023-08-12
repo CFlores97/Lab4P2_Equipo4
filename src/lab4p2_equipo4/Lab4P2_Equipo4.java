@@ -24,18 +24,95 @@ public class Lab4P2_Equipo4 {
                     break;
                 case 2:
                     //Battle factory
+                    if (entrenadores.size() < 2) {
+                        System.out.println("No hay suficientes entrenadores");
+                        break;
+                    }
+                    System.out.println("Elija sus combatientes:");
+                    int ent1 = Listar(entrenadores);
+                    int ent2 = Listar(entrenadores);
+
+                    if (ent1 == ent2) {
+                        System.out.println("No puede pelear contra si mismo!");
+                        break;
+                    }
+                    
+                    if(hayEquipo(entrenadores.get(ent1).getPokemones()) == false || hayEquipo(entrenadores.get(ent2).getPokemones()) == false){
+                        System.out.println("Uno de los entrenadores no tiene pokemones!");
+                        break;
+                    }
+                    
+                    //Elige el pokemon del primer entrenador.
+                    int in1 = ListarPokemon(entrenadores.get(ent1).getPokemones());
+                    Pokemon PK1 = entrenadores.get(ent1).getPokemones()[in1];
+                    while (entrenadores.get(ent1).getPokemones()[in1] == null) {
+                        System.out.println("Tiene que elegir un pokemon");
+                        in1 = ListarPokemon(entrenadores.get(ent1).getPokemones());
+                        PK1 = entrenadores.get(ent1).getPokemones()[in1];
+                    }
+                    
+                    //Elige el pokemon del segundo entrenador.
+                    int in2 = ListarPokemon(entrenadores.get(ent2).getPokemones());
+                    Pokemon PK2 = entrenadores.get(ent2).getPokemones()[in2];
+                    while (entrenadores.get(ent2).getPokemones()[in2] == null) {
+                        System.out.println("Tiene que elegir un pokemon");
+                        in2 = ListarPokemon(entrenadores.get(ent1).getPokemones());
+                        PK2 = entrenadores.get(ent1).getPokemones()[in2];
+                    }
+                    
+                    //Empiezan a pelear
+                    while(PK1.getHP() > 0 || PK2.getHP() > 0){
+                        System.out.println("Pokemon 1: " + PK1.getHP() + " HP");
+                        int mov1 = ListarMovimientos(PK1.getMovimientos());
+                        
+                        System.out.println("Pokemon 2:" + PK2.getHP() + "HP");
+                        int mov2 = ListarMovimientos(PK2.getMovimientos());
+                        
+                        if(PK1.getSpeed() >= PK2.getSpeed()){
+                            PK2 = batalla(PK1, PK2, mov1);
+                            if(PK2.getHP() <= 0){
+                                break;
+                            }
+                            PK1 = batalla(PK2,PK1,mov2);
+                        }
+                        else{
+                            PK1 = batalla(PK2, PK1, mov2);
+                            if(PK1.getHP() <= 0){
+                                break;
+                            }
+                            PK2 = batalla(PK1,PK2,mov1);
+                        }
+                    }
+                    //Dice quien gano.
+                    System.out.println("La batalla ha terminado");
+                    if(PK1.getHP() <= 0){
+                        System.out.println(PK2.getEspecie() + " del entrenador 2 gana!!!");
+                    }
+                    else{
+                        System.out.println(PK1.getEspecie() + " del entrenador 1 gana!!!");
+                    }
                     break;
 
                 case 3:
+                    // Capturar/Entrenar
+                    if (entrenadores.isEmpty()) {
+                        System.out.println("No hay entrenadores que elegir!");
+                        break;
+                    }
 
-                    // temporal
                     int indice = Listar(entrenadores);
 
                     System.out.println("Que accion desea realizar?\n1. Capturar\n2. Entrenar");
                     int acc = sc.nextInt();
 
                     switch (acc) {
+                        //Capturar
                         case 1:
+                            if (movimientos.size() < 4) {
+                                System.out.println("No hay suficientes movimientos para enseñarle a un pokemon!");
+                                break;
+                            }
+
                             Pokemon pk = capturaPok();
                             Entrenador a = entrenadores.get(indice);
                             System.out.println("A donde quiere agregar su pokemon?\n1. Equipo principal\n2. Caja de pokemones");
@@ -54,7 +131,12 @@ public class Lab4P2_Equipo4 {
                                     throw new AssertionError();
                             }
                             break;
+                        //Entrenar
                         case 2:
+                            if (hayEquipo(entrenadores.get(indice).getPokemones()) == false) {
+                                System.out.println("No hay ningun pokemon que entrenar");
+                                break;
+                            }
 
                             int index = ListarPokemon(entrenadores.get(indice).getPokemones());
                             Pokemon tempPok = entrenadores.get(indice).getPokemones()[index];
@@ -143,7 +225,7 @@ public class Lab4P2_Equipo4 {
         for (int i = 0; i < 4; i++) {
             int indx = Listar(movimientos);
             pokemon.getMovimientos()[i] = movimientos.get(indx);
-            movimientos.remove(i);
+            movimientos.remove(indx);
         }
 
         return pokemon;
@@ -279,5 +361,38 @@ public class Lab4P2_Equipo4 {
 
         }
 
+    }
+
+    public static boolean hayEquipo(Pokemon[] equipo) {
+        boolean existe = false;
+        for (int i = 0; i < equipo.length; i++) {
+            if (equipo[i] instanceof Pokemon) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+    public static Pokemon batalla(Pokemon atacante, Pokemon defensor, int move){
+        Movimiento attack = atacante.getMovimientos()[move];
+        int daño = attack.Ataque(atacante, defensor);
+        if(attack instanceof Fisico){
+            System.out.println(atacante.getEspecie() + "hizo " + daño + " de Daño");
+            defensor.setHP(defensor.getHP() - daño);
+        }
+        else if(attack instanceof Especial){
+            System.out.println(atacante.getEspecie() + "hizo " + daño + " de Daño");
+            defensor.setHP(defensor.getHP() - daño);
+        }
+        else{
+            if(daño < 76){
+                System.out.println(defensor.getEspecie() + " ahora esta " + ((Estado) attack).getEstado());
+                defensor.setEstado(((Estado) attack).getEstado());
+            }
+            else{
+                System.out.println("El ataque de " + atacante.getEspecie() + " fallo!");
+            }
+        }
+        return defensor;
     }
 }
